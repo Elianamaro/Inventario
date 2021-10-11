@@ -171,17 +171,15 @@ namespace Inventario.Formularios
                 }
             }
         }
-        private Boolean email_bien_escrito(String email)
+        private bool email_bien_escrito(string email)
         {
-            String expresion;
-            expresion = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
-            if (Regex.IsMatch(email, expresion))
+            string mailFormat = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
+            if (Regex.IsMatch(email, mailFormat))
             {
-                if (Regex.Replace(email, expresion, String.Empty).Length == 0)
+                if (Regex.Replace(email, mailFormat, string.Empty).Length == 0)
                 {
                     return true;
-                }
-                else
+                } else
                 {
                     return false;
                 }
@@ -189,6 +187,16 @@ namespace Inventario.Formularios
             else
             {
                 return false;
+            }
+        }
+
+        private void txtCorreo_Leave(object sender, EventArgs e)
+        {
+            bool verificar = email_bien_escrito(txtCorreo.Text);
+            if (verificar == false)
+            {
+                MessageBox.Show("El correo no tiene el formato correcto");
+                txtCorreo.Focus();
             }
         }
     }

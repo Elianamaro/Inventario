@@ -124,6 +124,7 @@ namespace Inventario.Formularios
             this.txtCorreo.Name = "txtCorreo";
             this.txtCorreo.Size = new System.Drawing.Size(211, 20);
             this.txtCorreo.TabIndex = 8;
+            this.txtCorreo.Leave += new System.EventHandler(this.txtCorreo_Leave);
             // 
             // DGVTiendas
             // 
