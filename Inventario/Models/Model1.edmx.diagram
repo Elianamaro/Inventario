@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9585d162908e41dfbd3c0c2b25f38cc7" Name="Diagram1">
+        <EntityTypeShape EntityType="Registro_TiendasModel.Cargo" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Registro_TiendasModel.Categorias" Width="1.5" PointX="9.125" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Registro_TiendasModel.Empleado" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Registro_TiendasModel.Marca" Width="1.5" PointX="3.875" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Registro_TiendasModel.Producto" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Registro_TiendasModel.Stock_tienda" Width="1.5" PointX="9.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Registro_TiendasModel.Tienda" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="Registro_TiendasModel.FK_Empleado_Cargo" ManuallyRouted="false" />
+        <AssociationConnector Association="Registro_TiendasModel.FK_Producto_Categorias" ManuallyRouted="false" />
+        <AssociationConnector Association="Registro_TiendasModel.FK_Tienda_Empleado" ManuallyRouted="false" />
+        <AssociationConnector Association="Registro_TiendasModel.FK_Producto_Marca" ManuallyRouted="false" />
+        <AssociationConnector Association="Registro_TiendasModel.FK_Producto_Tienda" ManuallyRouted="false" />
+        <AssociationConnector Association="Registro_TiendasModel.FK_Stock_tienda_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="Registro_TiendasModel.FK_Stock_tienda_Tienda" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
