@@ -153,6 +153,7 @@ namespace Inventario.Formularios
             this.dgvProductos.RowHeadersWidth = 51;
             this.dgvProductos.Size = new System.Drawing.Size(537, 444);
             this.dgvProductos.TabIndex = 29;
+            this.dgvProductos.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvProductos_MouseClick);
             // 
             // btnGuardar
             // 
@@ -264,7 +265,6 @@ namespace Inventario.Formularios
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(335, 26);
             this.dateTimePicker1.TabIndex = 48;
-            this.dateTimePicker1.Validated += new System.EventHandler(this.dateTimePicker1_Validated);
             // 
             // label10
             // 

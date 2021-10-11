@@ -49,6 +49,7 @@ namespace Inventario.Formularios
             this.btnLimpiar.TabIndex = 13;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnEliminar
             // 
@@ -61,6 +62,7 @@ namespace Inventario.Formularios
             this.btnEliminar.TabIndex = 12;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // dgvMarcas
             // 
@@ -71,6 +73,7 @@ namespace Inventario.Formularios
             this.dgvMarcas.RowHeadersWidth = 51;
             this.dgvMarcas.Size = new System.Drawing.Size(478, 177);
             this.dgvMarcas.TabIndex = 11;
+            this.dgvMarcas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvMarcas_MouseClick);
             // 
             // btnGuardar
             // 
@@ -82,6 +85,7 @@ namespace Inventario.Formularios
             this.btnGuardar.TabIndex = 10;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // txtNombre
             // 

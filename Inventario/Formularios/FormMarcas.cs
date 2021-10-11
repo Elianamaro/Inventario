@@ -13,7 +13,7 @@ namespace Inventario.Formularios
 {
     public partial class FormMarcas : Form
     {
-        public Registro_TiendasEntities1 db = new Registro_TiendasEntities1();
+        private Registro_TiendasEntities1 db = new Registro_TiendasEntities1();
         int idMarca = 0;
         public FormMarcas()
         {
@@ -21,28 +21,6 @@ namespace Inventario.Formularios
             cargarMarcas();
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
-        {
-            string error = Validar();
-            if (error != "")
-            {
-                MessageBox.Show(error, "Datos Insuficientes");
-            }
-            else
-            {
-                if (idMarca == 0)
-                {
-                    Guardar();
-                }
-                else
-                {
-                    Editar();
-                }
-                MessageBox.Show("Registro Guardado!!!");
-                cargarMarcas();
-                limpiar();
-            }
-        }
         private bool buscarNombre(string nombre)
         {
             bool resultado = false;
@@ -62,47 +40,18 @@ namespace Inventario.Formularios
                                    Nombre = m.nombre_marca
                                }).ToList();
             dgvMarcas.DataSource = listaMarcas;
+
             dgvMarcas.Columns[0].Visible = false;
-        }
-
-        private void dgvMarcas_MouseClick(object sender, MouseEventArgs e)
-        {
-            idMarca = int.Parse(dgvMarcas.CurrentRow.Cells[0].Value.ToString());
-            txtNombre.Text = dgvMarcas.CurrentRow.Cells[1].Value.ToString();
-
-            btnEliminar.Enabled = true;
         }
         private void limpiar()
         {
             idMarca = 0;
             txtNombre.Text = "";
             dgvMarcas.ClearSelection();
+
             btnEliminar.Enabled = false;
         }
 
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (idMarca > 0)
-            {
-                var respuesta = MessageBox.Show("¿Desea eliminar la marca " + txtNombre.Text + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
-
-                if (respuesta == DialogResult.Yes)
-                {
-                    Marca m = db.Marca.Find(idMarca);
-                    db.Marca.Remove(m);
-                    
-                    MessageBox.Show("Eliminado con éxito!");
-                    db.SaveChanges();
-                    cargarMarcas();
-                    limpiar();
-                }
-            }
-        }
-
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            limpiar();
-        }
         private void Guardar()
         {
             Marca m = new Marca();
@@ -136,6 +85,61 @@ namespace Inventario.Formularios
                     txtNombre.Text = "";
                 }
             }
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            string error = Validar();
+            if (error != "")
+            {
+                MessageBox.Show(error, "Datos Insuficientes");
+            }
+            else
+            {
+                if (idMarca == 0)
+                {
+                    Guardar();
+                }
+                else
+                {
+                    Editar();
+                }
+                MessageBox.Show("Registro Guardado!!!");
+                cargarMarcas();
+                limpiar();
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            limpiar();
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (idMarca > 0)
+            {
+                var respuesta = MessageBox.Show("¿Desea eliminar la marca " + txtNombre.Text + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    Marca m = db.Marca.Find(idMarca);
+                    db.Marca.Remove(m);
+
+                    MessageBox.Show("Eliminado con éxito!");
+                    db.SaveChanges();
+                    cargarMarcas();
+                    limpiar();
+                }
+            }
+        }
+
+        private void dgvMarcas_MouseClick(object sender, MouseEventArgs e)
+        {
+            idMarca = int.Parse(dgvMarcas.CurrentRow.Cells[0].Value.ToString());
+            txtNombre.Text = dgvMarcas.CurrentRow.Cells[1].Value.ToString();
+
+            btnEliminar.Enabled = true;
         }
     }
 }

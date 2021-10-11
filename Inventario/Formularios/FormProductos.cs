@@ -14,8 +14,8 @@ namespace Inventario.Formularios
     public partial class FormProductos : Form
     {
         private SoloNumeros sn = new SoloNumeros();
-        private Fecha f = new Fecha();
-        public Registro_TiendasEntities1 db = new Registro_TiendasEntities1();
+        
+        private Registro_TiendasEntities1 db = new Registro_TiendasEntities1();
         int id_producto = 0;
         public FormProductos()
         {
@@ -23,8 +23,9 @@ namespace Inventario.Formularios
             cargarMarcas();
             cargarCategorias();
             cargarProductos();
+            cargartiendas();
         }
-
+        
         private void cargarMarcas()
         {
             var listaMarcas = (from m in db.Marca
@@ -51,6 +52,16 @@ namespace Inventario.Formularios
             cbCategorias.DisplayMember = "nombre";
 
             cbCategorias.SelectedIndex = -1;
+        }
+        private void cargartiendas()
+        {
+            var listaTiendas = db.Tienda.OrderBy(t => t.nombre).ToList();
+
+            cbTienda.DataSource = listaTiendas;
+            cbTienda.ValueMember = "id_tienda";
+            cbTienda.DisplayMember = "nombre";
+
+            cbTienda.SelectedIndex = -1;
         }
 
         public void cargarProductos()
@@ -89,6 +100,8 @@ namespace Inventario.Formularios
                 mensaje += "Debe seleccionar una Tienda \n";
             if (string.IsNullOrEmpty(txtCodigo.Text.Trim()))
                 mensaje += "Debe ingresar un Código \n";
+            if (dateTimePicker1.Value.Date >= DateTime.Now.Date)
+                mensaje += "La fecha de ingreso no debe superar a la fecha actual \n";
             if (string.IsNullOrEmpty(txtNombre.Text.Trim()))
                 mensaje += "Debe ingresar un Nombre \n";
             if (string.IsNullOrEmpty(txtCompra.Text.Trim()))
@@ -102,6 +115,7 @@ namespace Inventario.Formularios
             Producto p = new Producto();
             p.codigo_producto = txtCodigo.Text.Trim();
             p.nombre_producto = txtNombre.Text.Trim();
+            p.fecha_recepcion = DateTime.Parse(dateTimePicker1.Value.ToString());
             p.precio_compra = int.Parse(txtCompra.Text);
             p.precio_venta = int.Parse(txtVenta.Text);
             p.descripcion_producto = txtDescripcion.Text.Trim();
@@ -117,6 +131,7 @@ namespace Inventario.Formularios
             Producto p = db.Producto.Find(id_producto);
             p.codigo_producto = txtCodigo.Text.Trim();
             p.nombre_producto = txtNombre.Text.Trim();
+            p.fecha_recepcion = dateTimePicker1.Value;
             p.precio_compra = int.Parse(txtCompra.Text);
             p.precio_venta = int.Parse(txtVenta.Text);
             p.descripcion_producto = txtDescripcion.Text.Trim();
@@ -147,21 +162,6 @@ namespace Inventario.Formularios
                 cargarProductos();
                 Limpiar();
             }
-        }
-
-        private void dgvProductos_MouseClick(object sender, MouseEventArgs e)
-        {
-            id_producto = int.Parse(dgvProductos.CurrentRow.Cells[0].Value.ToString());
-            cbMarcas.SelectedValue = int.Parse(dgvProductos.CurrentRow.Cells[1].Value.ToString());
-            cbCategorias.SelectedValue = int.Parse(dgvProductos.CurrentRow.Cells[2].Value.ToString());
-            cbTienda.SelectedValue = int.Parse(dgvProductos.CurrentRow.Cells[5].Value.ToString());
-            txtCodigo.Text = dgvProductos.CurrentRow.Cells[6].Value.ToString();
-            txtNombre.Text = dgvProductos.CurrentRow.Cells[7].Value.ToString();
-            txtCompra.Text = dgvProductos.CurrentRow.Cells[8].Value.ToString();
-            txtVenta.Text = dgvProductos.CurrentRow.Cells[9].Value.ToString();
-            txtDescripcion.Text = dgvProductos.CurrentRow.Cells[10].Value.ToString();
-
-            btnEliminar.Enabled = true;
         }
 
         private void Limpiar()
@@ -248,9 +248,19 @@ namespace Inventario.Formularios
             sn.soloNumeros(e);
         }
 
-        private void dateTimePicker1_Validated(object sender, EventArgs e)
+        private void dgvProductos_MouseClick(object sender, MouseEventArgs e)
         {
-            
+            id_producto = int.Parse(dgvProductos.CurrentRow.Cells[0].Value.ToString());
+            cbMarcas.SelectedValue = int.Parse(dgvProductos.CurrentRow.Cells[1].Value.ToString());
+            cbCategorias.SelectedValue = int.Parse(dgvProductos.CurrentRow.Cells[2].Value.ToString());
+            cbTienda.SelectedValue = int.Parse(dgvProductos.CurrentRow.Cells[5].Value.ToString());
+            txtCodigo.Text = dgvProductos.CurrentRow.Cells[6].Value.ToString();
+            txtNombre.Text = dgvProductos.CurrentRow.Cells[7].Value.ToString();
+            txtCompra.Text = dgvProductos.CurrentRow.Cells[8].Value.ToString();
+            txtVenta.Text = dgvProductos.CurrentRow.Cells[9].Value.ToString();
+            txtDescripcion.Text = dgvProductos.CurrentRow.Cells[10].Value.ToString();
+
+            btnEliminar.Enabled = true;
         }
     }
 }

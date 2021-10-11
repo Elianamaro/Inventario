@@ -17,7 +17,7 @@ namespace Inventario.Formularios
     public partial class FormTiendas : Form
     {
         private SoloNumeros sn = new SoloNumeros();
-        public Registro_TiendasEntities1 db = new Registro_TiendasEntities1();
+        private Registro_TiendasEntities1 db = new Registro_TiendasEntities1();
         int idTienda = 0;
         public FormTiendas()
         {
@@ -36,20 +36,19 @@ namespace Inventario.Formularios
                                 select new
                                 {
                                     t.id_tienda,
-                                    t.id_empleado,
                                     tiendanom = t.nombre,
                                     tiendaubi = t.ubicacion,
                                     tiendacorreo = t.correo,
                                     tiendafono = t.telefono
                                 }).ToList();
             DGVTiendas.DataSource = listatiendas;
+
             DGVTiendas.Columns[0].Visible = false;
-            DGVTiendas.Columns[1].Visible = false;
         }
         private string Validacion()
         {
             string mensaje = "";
-            //string.IsNullOrEmpty verifica si un string es nulo o vacio
+
             if (string.IsNullOrEmpty(txtTienda.Text.Trim()))
                 mensaje = "Debe ingresar nombre de la tienda \n";
             if (string.IsNullOrEmpty(txtUbicacion.Text.Trim()))
@@ -64,7 +63,8 @@ namespace Inventario.Formularios
         private void guardartienda()
         {
             Tienda t = new Tienda();
-            t.nombre = txtCorreo.Text.Trim();
+
+            t.nombre = txtTienda.Text.Trim();
             t.ubicacion = txtUbicacion.Text.Trim();
             t.telefono = int.Parse(txtFono.Text);
             t.correo = txtCorreo.Text.Trim();
@@ -74,7 +74,8 @@ namespace Inventario.Formularios
         private void editartienda()
         {
             Tienda t = db.Tienda.Find(idTienda);
-            t.nombre = txtCorreo.Text.Trim();
+
+            t.nombre = txtTienda.Text.Trim();
             t.ubicacion = txtUbicacion.Text.Trim();
             t.telefono = int.Parse(txtFono.Text);
             t.correo = txtCorreo.Text.Trim();
@@ -118,10 +119,11 @@ namespace Inventario.Formularios
 
         private void DGVTiendas_MouseClick(object sender, MouseEventArgs e)
         {
-            txtTienda.Text = DGVTiendas.CurrentRow.Cells[0].Value.ToString();
-            txtUbicacion.Text = DGVTiendas.CurrentRow.Cells[1].Value.ToString();
-            txtFono.Text = DGVTiendas.CurrentRow.Cells[2].Value.ToString();
-            txtCorreo.Text = DGVTiendas.CurrentRow.Cells[3].Value.ToString();
+            idTienda = int.Parse(DGVTiendas.CurrentRow.Cells[0].Value.ToString());
+            txtTienda.Text = DGVTiendas.CurrentRow.Cells[1].Value.ToString();
+            txtUbicacion.Text = DGVTiendas.CurrentRow.Cells[2].Value.ToString();
+            txtFono.Text = DGVTiendas.CurrentRow.Cells[3].Value.ToString();
+            txtCorreo.Text = DGVTiendas.CurrentRow.Cells[4].Value.ToString();
 
             btnEliminar.Enabled = true;
         }
