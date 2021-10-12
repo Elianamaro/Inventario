@@ -13,7 +13,7 @@ namespace Inventario.Formularios
 {
     public partial class FormCategorias : Form
     {
-        public Registro_TiendasEntities1 db = new Registro_TiendasEntities1();
+        private Registro_TiendasEntities1 db = new Registro_TiendasEntities1();
         int id_categoria = 0;
         public FormCategorias()
         {
@@ -21,72 +21,84 @@ namespace Inventario.Formularios
             cargarCategorias();
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private string Validar()
         {
-            if (txtNombre.Text.Trim() != "")
-            {
-                if (id_categoria == 0)
-                {
-                    if (buscarNombre(txtNombre.Text.Trim()))
-                    {
-                        Categorias categoria = new Categorias();
-                        categoria.nombre = txtNombre.Text.Trim();
-                        db.Categorias.Add(categoria);
-                        db.SaveChanges();
-                        limpiar();
-                        cargarCategorias();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta categoría ya está registrada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-                else
-                {
-                    if (buscarNombre(txtNombre.Text.Trim()))
-                    {
-                        var Categoria = db.Categorias.Find(id_categoria);
-                        if (Categoria != null)
-                        {
-                            Categoria.nombre = txtNombre.Text;
-                            db.SaveChanges();
-                            limpiar();
-                            cargarCategorias();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta categoría ya está registrada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Debe ingrese el nombre de una categoría");
-            }
+            string aviso = "";
+            if (string.IsNullOrEmpty(txtNombre.Text.Trim()))
+                aviso = "Debe ingresar nombre de la nueva categoria \n";
+            return aviso;
         }
+        private void Guardar()
+        {
+            Categorias c = new Categorias();
+            c.nombre = txtNombre.Text.Trim();
+
+            db.Categorias.Add(c);
+            db.SaveChanges();
+        }
+        private void Editar()
+        {
+            Categorias c = db.Categorias.Find(id_categoria);
+            c.nombre = txtNombre.Text.Trim();
+
+            db.SaveChanges();
+        }
+
         private bool buscarNombre(string nombre)
         {
-            var eq = db.Categorias.FirstOrDefault(c => c.nombre == nombre);
-            if (eq != null)
-            {
-                return false;
-            }
-            return true;
-        }
-        private void dgvMarcas_MouseClick(object sender, MouseEventArgs e)
-        {
-            id_categoria = int.Parse(dgvCategorias.CurrentRow.Cells[0].Value.ToString());
-            txtNombre.Text = dgvCategorias.CurrentRow.Cells[1].Value.ToString();
+            bool resp = false;
 
-            btnEliminar.Enabled = true;
+            Categorias cate = db.Categorias.FirstOrDefault(c => c.nombre.Equals(nombre) && c.id_categoria != id_categoria);
+            if (cate != null)
+                resp = true;
+
+            return resp;
         }
+ 
         private void limpiar()
         {
             id_categoria = 0;
             txtNombre.Text = "";
             dgvCategorias.ClearSelection();
             btnEliminar.Enabled = false;
+        }
+
+
+        private void cargarCategorias()
+        {
+            var listaCategorias = (from c in db.Categorias
+                                   orderby c.nombre
+                                   select new
+                                   {
+                                       id = c.id_categoria,
+                                       nombre = c.nombre
+                                   }).ToList();
+
+            dgvCategorias.DataSource = listaCategorias;
+            dgvCategorias.Columns[0].Visible = false;
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            string error = Validar();
+            if (error != "")
+            {
+                MessageBox.Show(error, "Datos Insuficientes");
+            }
+            else
+            {
+                if (id_categoria == 0)
+                {
+                    Guardar();
+                }
+                else
+                {
+                    Editar();
+                }
+                MessageBox.Show("Categoria guardada exitosamente!!!");
+                cargarCategorias();
+                limpiar();
+            }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -107,23 +119,29 @@ namespace Inventario.Formularios
             }
         }
 
+        private void dgvCategorias_MouseClick(object sender, MouseEventArgs e)
+        {
+            id_categoria = int.Parse(dgvCategorias.CurrentRow.Cells[0].Value.ToString());
+            txtNombre.Text = dgvCategorias.CurrentRow.Cells[1].Value.ToString();
+
+            btnEliminar.Enabled = true;
+        }
+
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
         }
 
-        private void cargarCategorias()
+        private void txtNombre_Leave(object sender, EventArgs e)
         {
-            var listaCategorias = (from c in db.Categorias
-                                   orderby c.nombre
-                                   select new
-                                   {
-                                       id = c.id_categoria,
-                                       nombre = c.nombre
-                                   }).ToList();
-
-            dgvCategorias.DataSource = listaCategorias;
-            dgvCategorias.Columns[0].Visible = false;
+            if (txtNombre.Text.Trim() != "")
+            {
+                if (buscarNombre(txtNombre.Text.Trim()))
+                {
+                    MessageBox.Show("La categoria ya esta registrada");
+                    txtNombre.Text = "";
+                }
+            }
         }
     }
 }

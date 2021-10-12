@@ -25,12 +25,9 @@ namespace Inventario.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Cargo> Cargo { get; set; }
         public virtual DbSet<Categorias> Categorias { get; set; }
-        public virtual DbSet<Empleado> Empleado { get; set; }
         public virtual DbSet<Marca> Marca { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
-        public virtual DbSet<Stock_tienda> Stock_tienda { get; set; }
         public virtual DbSet<Tienda> Tienda { get; set; }
     }
 }

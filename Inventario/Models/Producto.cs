@@ -14,12 +14,6 @@ namespace Inventario.Models
     
     public partial class Producto
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Producto()
-        {
-            this.Stock_tienda = new HashSet<Stock_tienda>();
-        }
-    
         public int id_producto { get; set; }
         public string nombre_producto { get; set; }
         public string codigo_producto { get; set; }
@@ -34,7 +28,5 @@ namespace Inventario.Models
         public virtual Categorias Categorias { get; set; }
         public virtual Marca Marca { get; set; }
         public virtual Tienda Tienda { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Stock_tienda> Stock_tienda { get; set; }
     }
 }

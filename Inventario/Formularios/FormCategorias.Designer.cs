@@ -44,12 +44,13 @@ namespace Inventario.Formularios
             this.btnLimpiar.BackColor = System.Drawing.Color.Azure;
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiar.Location = new System.Drawing.Point(495, 354);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(0);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(146, 40);
             this.btnLimpiar.TabIndex = 20;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnEliminar
             // 
@@ -62,6 +63,7 @@ namespace Inventario.Formularios
             this.btnEliminar.TabIndex = 19;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // dgvCategorias
             // 
@@ -72,6 +74,7 @@ namespace Inventario.Formularios
             this.dgvCategorias.RowHeadersWidth = 51;
             this.dgvCategorias.Size = new System.Drawing.Size(478, 177);
             this.dgvCategorias.TabIndex = 18;
+            this.dgvCategorias.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvCategorias_MouseClick);
             // 
             // btnGuardar
             // 
@@ -83,6 +86,7 @@ namespace Inventario.Formularios
             this.btnGuardar.TabIndex = 17;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // txtNombre
             // 
@@ -91,6 +95,7 @@ namespace Inventario.Formularios
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(269, 26);
             this.txtNombre.TabIndex = 16;
+            this.txtNombre.Leave += new System.EventHandler(this.txtNombre_Leave);
             // 
             // label2
             // 

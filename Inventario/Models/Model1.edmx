@@ -5,29 +5,12 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Registro_TiendasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Cargo">
-          <Key>
-            <PropertyRef Name="id_cargo" />
-          </Key>
-          <Property Name="id_cargo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre_cargo" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Categorias">
           <Key>
             <PropertyRef Name="id_categoria" />
           </Key>
           <Property Name="id_categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Empleado">
-          <Key>
-            <PropertyRef Name="id_empleado" />
-          </Key>
-          <Property Name="id_empleado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="telefono" Type="int" Nullable="false" />
-          <Property Name="id_cargo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Marca">
           <Key>
@@ -51,38 +34,16 @@
           <Property Name="id_categoria" Type="int" Nullable="false" />
           <Property Name="fecha_recepcion" Type="date" Nullable="false" />
         </EntityType>
-        <EntityType Name="Stock_tienda">
-          <Key>
-            <PropertyRef Name="id_stock" />
-          </Key>
-          <Property Name="id_stock" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="cantidad" Type="int" Nullable="false" />
-          <Property Name="id_tienda" Type="int" Nullable="false" />
-          <Property Name="id_producto" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tienda">
           <Key>
             <PropertyRef Name="id_tienda" />
           </Key>
           <Property Name="id_tienda" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ubicacion" Type="varchar" MaxLength="150" />
-          <Property Name="telefono" Type="int" />
-          <Property Name="correo" Type="varchar" MaxLength="200" />
-          <Property Name="id_empleado" Type="int" Nullable="false" />
+          <Property Name="ubicacion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="telefono" Type="int" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Empleado_Cargo">
-          <End Role="Cargo" Type="Self.Cargo" Multiplicity="1" />
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cargo">
-              <PropertyRef Name="id_cargo" />
-            </Principal>
-            <Dependent Role="Empleado">
-              <PropertyRef Name="id_cargo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Producto_Categorias">
           <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
@@ -107,7 +68,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Producto_Tienda">
+        <Association Name="FK_Producto_Tienda1">
           <End Role="Tienda" Type="Self.Tienda" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
           <ReferentialConstraint>
@@ -119,54 +80,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Stock_tienda_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="Stock_tienda" Type="Self.Stock_tienda" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="id_producto" />
-            </Principal>
-            <Dependent Role="Stock_tienda">
-              <PropertyRef Name="id_producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Stock_tienda_Tienda">
-          <End Role="Tienda" Type="Self.Tienda" Multiplicity="1" />
-          <End Role="Stock_tienda" Type="Self.Stock_tienda" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tienda">
-              <PropertyRef Name="id_tienda" />
-            </Principal>
-            <Dependent Role="Stock_tienda">
-              <PropertyRef Name="id_tienda" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tienda_Empleado">
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
-          <End Role="Tienda" Type="Self.Tienda" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empleado">
-              <PropertyRef Name="id_empleado" />
-            </Principal>
-            <Dependent Role="Tienda">
-              <PropertyRef Name="id_empleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Registro_TiendasModelStoreContainer">
-          <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Stock_tienda" EntityType="Self.Stock_tienda" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tienda" EntityType="Self.Tienda" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Empleado_Cargo" Association="Self.FK_Empleado_Cargo">
-            <End Role="Cargo" EntitySet="Cargo" />
-            <End Role="Empleado" EntitySet="Empleado" />
-          </AssociationSet>
           <AssociationSet Name="FK_Producto_Categorias" Association="Self.FK_Producto_Categorias">
             <End Role="Categorias" EntitySet="Categorias" />
             <End Role="Producto" EntitySet="Producto" />
@@ -175,21 +93,9 @@
             <End Role="Marca" EntitySet="Marca" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK_Producto_Tienda" Association="Self.FK_Producto_Tienda">
+          <AssociationSet Name="FK_Producto_Tienda1" Association="Self.FK_Producto_Tienda1">
             <End Role="Tienda" EntitySet="Tienda" />
             <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Stock_tienda_Producto" Association="Self.FK_Stock_tienda_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Stock_tienda" EntitySet="Stock_tienda" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Stock_tienda_Tienda" Association="Self.FK_Stock_tienda_Tienda">
-            <End Role="Tienda" EntitySet="Tienda" />
-            <End Role="Stock_tienda" EntitySet="Stock_tienda" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tienda_Empleado" Association="Self.FK_Tienda_Empleado">
-            <End Role="Empleado" EntitySet="Empleado" />
-            <End Role="Tienda" EntitySet="Tienda" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -197,14 +103,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Registro_TiendasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Cargo">
-          <Key>
-            <PropertyRef Name="id_cargo" />
-          </Key>
-          <Property Name="id_cargo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre_cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Empleado" Relationship="Self.FK_Empleado_Cargo" FromRole="Cargo" ToRole="Empleado" />
-        </EntityType>
         <EntityType Name="Categorias">
           <Key>
             <PropertyRef Name="id_categoria" />
@@ -212,18 +110,6 @@
           <Property Name="id_categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categorias" FromRole="Categorias" ToRole="Producto" />
-        </EntityType>
-        <EntityType Name="Empleado">
-          <Key>
-            <PropertyRef Name="id_empleado" />
-          </Key>
-          <Property Name="id_empleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="telefono" Type="Int32" Nullable="false" />
-          <Property Name="id_cargo" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cargo" Relationship="Self.FK_Empleado_Cargo" FromRole="Empleado" ToRole="Cargo" />
-          <NavigationProperty Name="Tienda" Relationship="Self.FK_Tienda_Empleado" FromRole="Empleado" ToRole="Tienda" />
         </EntityType>
         <EntityType Name="Marca">
           <Key>
@@ -249,19 +135,7 @@
           <Property Name="fecha_recepcion" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Categorias" Relationship="Self.FK_Producto_Categorias" FromRole="Producto" ToRole="Categorias" />
           <NavigationProperty Name="Marca" Relationship="Self.FK_Producto_Marca" FromRole="Producto" ToRole="Marca" />
-          <NavigationProperty Name="Tienda" Relationship="Self.FK_Producto_Tienda" FromRole="Producto" ToRole="Tienda" />
-          <NavigationProperty Name="Stock_tienda" Relationship="Self.FK_Stock_tienda_Producto" FromRole="Producto" ToRole="Stock_tienda" />
-        </EntityType>
-        <EntityType Name="Stock_tienda">
-          <Key>
-            <PropertyRef Name="id_stock" />
-          </Key>
-          <Property Name="id_stock" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="cantidad" Type="Int32" Nullable="false" />
-          <Property Name="id_tienda" Type="Int32" Nullable="false" />
-          <Property Name="id_producto" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Stock_tienda_Producto" FromRole="Stock_tienda" ToRole="Producto" />
-          <NavigationProperty Name="Tienda" Relationship="Self.FK_Stock_tienda_Tienda" FromRole="Stock_tienda" ToRole="Tienda" />
+          <NavigationProperty Name="Tienda" Relationship="Self.FK_Producto_Tienda1" FromRole="Producto" ToRole="Tienda" />
         </EntityType>
         <EntityType Name="Tienda">
           <Key>
@@ -269,26 +143,11 @@
           </Key>
           <Property Name="id_tienda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ubicacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="telefono" Type="Int32" />
-          <Property Name="correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="id_empleado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Empleado" Relationship="Self.FK_Tienda_Empleado" FromRole="Tienda" ToRole="Empleado" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Tienda" FromRole="Tienda" ToRole="Producto" />
-          <NavigationProperty Name="Stock_tienda" Relationship="Self.FK_Stock_tienda_Tienda" FromRole="Tienda" ToRole="Stock_tienda" />
+          <Property Name="ubicacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono" Type="Int32" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Tienda1" FromRole="Tienda" ToRole="Producto" />
         </EntityType>
-        <Association Name="FK_Empleado_Cargo">
-          <End Role="Cargo" Type="Self.Cargo" Multiplicity="1" />
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cargo">
-              <PropertyRef Name="id_cargo" />
-            </Principal>
-            <Dependent Role="Empleado">
-              <PropertyRef Name="id_cargo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Producto_Categorias">
           <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
@@ -298,18 +157,6 @@
             </Principal>
             <Dependent Role="Producto">
               <PropertyRef Name="id_categoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tienda_Empleado">
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
-          <End Role="Tienda" Type="Self.Tienda" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empleado">
-              <PropertyRef Name="id_empleado" />
-            </Principal>
-            <Dependent Role="Tienda">
-              <PropertyRef Name="id_empleado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -325,7 +172,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Producto_Tienda">
+        <Association Name="FK_Producto_Tienda1">
           <End Role="Tienda" Type="Self.Tienda" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
           <ReferentialConstraint>
@@ -337,65 +184,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Stock_tienda_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="Stock_tienda" Type="Self.Stock_tienda" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="id_producto" />
-            </Principal>
-            <Dependent Role="Stock_tienda">
-              <PropertyRef Name="id_producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Stock_tienda_Tienda">
-          <End Role="Tienda" Type="Self.Tienda" Multiplicity="1" />
-          <End Role="Stock_tienda" Type="Self.Stock_tienda" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tienda">
-              <PropertyRef Name="id_tienda" />
-            </Principal>
-            <Dependent Role="Stock_tienda">
-              <PropertyRef Name="id_tienda" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Registro_TiendasEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Cargo" EntityType="Self.Cargo" />
           <EntitySet Name="Categorias" EntityType="Self.Categorias" />
-          <EntitySet Name="Empleado" EntityType="Self.Empleado" />
           <EntitySet Name="Marca" EntityType="Self.Marca" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
-          <EntitySet Name="Stock_tienda" EntityType="Self.Stock_tienda" />
           <EntitySet Name="Tienda" EntityType="Self.Tienda" />
-          <AssociationSet Name="FK_Empleado_Cargo" Association="Self.FK_Empleado_Cargo">
-            <End Role="Cargo" EntitySet="Cargo" />
-            <End Role="Empleado" EntitySet="Empleado" />
-          </AssociationSet>
           <AssociationSet Name="FK_Producto_Categorias" Association="Self.FK_Producto_Categorias">
             <End Role="Categorias" EntitySet="Categorias" />
             <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tienda_Empleado" Association="Self.FK_Tienda_Empleado">
-            <End Role="Empleado" EntitySet="Empleado" />
-            <End Role="Tienda" EntitySet="Tienda" />
           </AssociationSet>
           <AssociationSet Name="FK_Producto_Marca" Association="Self.FK_Producto_Marca">
             <End Role="Marca" EntitySet="Marca" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK_Producto_Tienda" Association="Self.FK_Producto_Tienda">
+          <AssociationSet Name="FK_Producto_Tienda1" Association="Self.FK_Producto_Tienda1">
             <End Role="Tienda" EntitySet="Tienda" />
             <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Stock_tienda_Producto" Association="Self.FK_Stock_tienda_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Stock_tienda" EntitySet="Stock_tienda" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Stock_tienda_Tienda" Association="Self.FK_Stock_tienda_Tienda">
-            <End Role="Tienda" EntitySet="Tienda" />
-            <End Role="Stock_tienda" EntitySet="Stock_tienda" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -404,30 +208,11 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Registro_TiendasModelStoreContainer" CdmEntityContainer="Registro_TiendasEntities1">
-          <EntitySetMapping Name="Cargo">
-            <EntityTypeMapping TypeName="Registro_TiendasModel.Cargo">
-              <MappingFragment StoreEntitySet="Cargo">
-                <ScalarProperty Name="id_cargo" ColumnName="id_cargo" />
-                <ScalarProperty Name="nombre_cargo" ColumnName="nombre_cargo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Categorias">
             <EntityTypeMapping TypeName="Registro_TiendasModel.Categorias">
               <MappingFragment StoreEntitySet="Categorias">
                 <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Empleado">
-            <EntityTypeMapping TypeName="Registro_TiendasModel.Empleado">
-              <MappingFragment StoreEntitySet="Empleado">
-                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="apellido" ColumnName="apellido" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="id_cargo" ColumnName="id_cargo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -455,16 +240,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Stock_tienda">
-            <EntityTypeMapping TypeName="Registro_TiendasModel.Stock_tienda">
-              <MappingFragment StoreEntitySet="Stock_tienda">
-                <ScalarProperty Name="id_stock" ColumnName="id_stock" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="id_tienda" ColumnName="id_tienda" />
-                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tienda">
             <EntityTypeMapping TypeName="Registro_TiendasModel.Tienda">
               <MappingFragment StoreEntitySet="Tienda">
@@ -473,7 +248,6 @@
                 <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="correo" ColumnName="correo" />
-                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

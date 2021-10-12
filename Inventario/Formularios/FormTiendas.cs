@@ -38,9 +38,10 @@ namespace Inventario.Formularios
                                     t.id_tienda,
                                     tiendanom = t.nombre,
                                     tiendaubi = t.ubicacion,
-                                    tiendacorreo = t.correo,
-                                    tiendafono = t.telefono
+                                    tiendafono = t.telefono,
+                                    tiendacorreo = t.correo
                                 }).ToList();
+
             DGVTiendas.DataSource = listatiendas;
 
             DGVTiendas.Columns[0].Visible = false;
@@ -69,6 +70,7 @@ namespace Inventario.Formularios
             t.telefono = int.Parse(txtFono.Text);
             t.correo = txtCorreo.Text.Trim();
 
+            db.Tienda.Add(t);
             db.SaveChanges();
         }
         private void editartienda()
@@ -124,6 +126,7 @@ namespace Inventario.Formularios
             txtUbicacion.Text = DGVTiendas.CurrentRow.Cells[2].Value.ToString();
             txtFono.Text = DGVTiendas.CurrentRow.Cells[3].Value.ToString();
             txtCorreo.Text = DGVTiendas.CurrentRow.Cells[4].Value.ToString();
+            
 
             btnEliminar.Enabled = true;
         }
@@ -137,13 +140,14 @@ namespace Inventario.Formularios
         {
             if (idTienda > 0)
             {
-                var respuesta = MessageBox.Show("¿Desea eliminar el producto " + txtTienda.Text + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+                var respuesta = MessageBox.Show("¿Desea eliminar " + txtTienda.Text + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                 if (respuesta == DialogResult.Yes)
                 {
                     Tienda t = db.Tienda.Find(idTienda);
 
                     db.Tienda.Remove(t);
+
                     db.SaveChanges();
                     cargartiendas();
                     Limpiar();
