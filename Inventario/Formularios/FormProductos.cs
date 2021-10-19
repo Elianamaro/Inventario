@@ -100,7 +100,7 @@ namespace Inventario.Formularios
                 mensaje += "Debe seleccionar una Tienda \n";
             if (string.IsNullOrEmpty(txtCodigo.Text.Trim()))
                 mensaje += "Debe ingresar un Código \n";
-            if (dateTimePicker1.Value.Date >= DateTime.Now.Date)
+            if (dateTimePicker1.Value.Date > DateTime.Now.Date)
                 mensaje += "La fecha de ingreso no debe superar a la fecha actual \n";
             if (string.IsNullOrEmpty(txtNombre.Text.Trim()))
                 mensaje += "Debe ingresar un Nombre \n";
